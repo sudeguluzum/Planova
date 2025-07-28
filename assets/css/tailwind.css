@@ -26,6 +26,15 @@ body {
 button{
     cursor: pointer;
 }
+.bg-circles {
+  background-image: repeating-radial-gradient(
+    circle,
+    transparent 0px,
+    transparent 98px,
+    rgba(255, 255, 255, 0.1) 99px,
+    rgba(255, 255, 255, 0.1) 100px
+  );
+}
 .gradient-text{
  @apply bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] bg-clip-text text-transparent;
 }

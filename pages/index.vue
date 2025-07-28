@@ -7,9 +7,8 @@
         class="absolute inset-0 bg-gradient-to-tr from-black to-transparent pointer-events-none"
       ></div>
       <div class="relative text-white">
-        <h1 class="text-center text-lg md:text-3xl font-bold">
-          "Write it down so you don't forget, <br />
-          plan it so you don't delay."
+        <h1 class="text-center text-lg md:text-3xl font-bold max-w-2xl">
+          {{ quote[0].q }}
         </h1>
         <Icon
           name="line-md:moon-rising-loop"
@@ -40,10 +39,11 @@
           </button>
         </div>
       </div>
-      <NoteModal
+      <Popup
         v-if="activeModal"
         :item="activeModal"
         @close="activeModal = null"
+        @save="handleSave"
       />
     </div>
     <div class="c-black px-4 md:px-10">
@@ -123,6 +123,7 @@
       <Icon name="streamline-freehand:link-paperclip" /> -->
 </template>
 <script setup>
+const { data: quote } = await useFetch("/api/quote");
 const addButtons = [
   { icon: "fluent:note-add-24-regular", name: "Add Note", color: "c-purple" },
   { icon: "lucide:list-todo", name: "Add ToDo", color: "c-pink" },
@@ -133,27 +134,11 @@ function openModal(item) {
   activeModal.value = item;
 }
 
-const notes = [
-  { title: "work", note: "loremlfkslfklgdkj fkjfksklfjskf jsfskfjskfklslk" },
-  {
-    title: "work out",
-    note: "loreml fkslfklgd kjfkjfksklfjsk fjsfskfjskfklslk",
-  },
-  { title: "code", note: "loremlfkslfk lgdkj fkjfksklf jskfjsf skfjskfklslk" },
-  {
-    title: "work",
-    note: "loremlf kslfk lgdkj fkjfkskxvx vbcbcbclfjsk fjsfskfj skfklslk",
-  },
-  {
-    title: "math",
-    note: "lore mlfkslfklgdk jfkjfksk lfjsk fjsfs kfjskf klslk",
-  },
-  {
-    title: "study",
-    note: "lore mlfkslfklgdk jfkjf ksklfjs kfjsfskfjsk fklslk",
-  },
-];
-
+const notes = ref([{ title: "Hoşgeldn", note: "İlk notunu ekle.." }]);
+function handleSave(newNote) {
+  notes.value.push(newNote);
+  activeModal.value.null;
+}
 const horizontalDotContainer = ref(null);
 const verticalDotContainer = ref(null);
 
@@ -186,14 +171,3 @@ onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
 </script>
-<style scoped>
-.bg-circles {
-  background-image: repeating-radial-gradient(
-    circle,
-    transparent 0px,
-    transparent 98px,
-    rgba(255, 255, 255, 0.1) 99px,
-    rgba(255, 255, 255, 0.1) 100px
-  );
-}
-</style>

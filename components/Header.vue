@@ -14,7 +14,7 @@
         {{ i.name }}
       </button>
     </div>
-    <NuxtLink
+    <NuxtLink to="login"
       ><button
         class="border rounded-xl px-6 py-3 c-yellow text-black font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
       >
