@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Intel+One+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+@import "tailwindcss";
+
+body {
+ font-family: "Intel One Mono", monospace;
+   @apply bg-[#FF629C] ;
+  background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 98px,
+      rgba(255, 255, 255, 0.2) 99px,
+      rgba(255, 255, 255, 0.2) 100px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 98px,
+      rgba(255, 255, 255, 0.2) 99px,
+      rgba(255, 255, 255, 0.2) 100px
+    );
+
+  }
+.flex-center {
+    @apply flex items-center justify-center;
+}
+button{
+    cursor: pointer;
+}
+.gradient-text{
+ @apply bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] bg-clip-text text-transparent;
+}
+
+.c-gradient{
+   @apply  bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45];
+}
+.t-pink {
+    @apply text-[#FF629C] ;
+}
+.c-pink {
+    @apply bg-[#FF629C] ;
+}
+.c-purple {
+    @apply bg-[#918EFF] ;
+}
+.c-black {
+    @apply bg-[#0A0809] ;
+}
+.c-yellow {
+    @apply bg-[#FDFF45] ;
+}
