@@ -16,9 +16,9 @@
     </div>
     <NuxtLink to="login"
       ><button
-        class="border rounded-xl px-6 py-3 c-yellow text-black font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
+        class="border rounded-xl px-6 py-3 c-yellow text-black hover:text-white font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
       >
-        Sign in
+        Login
       </button></NuxtLink
     >
   </div>

@@ -17,24 +17,42 @@
 
         <div class="p-8 flex-center flex-col gap-5">
           <h1 class="text-3xl font-semibold">
-            Login to organize your thoughts.
+            Register to organize your thoughts.
           </h1>
+          <p class="text-sm hidden md:block text-white/60">
+            Access your sticky notes and tasks anywhere, anytime
+          </p>
         </div>
         <div class="bg-circles flex-center flex-col gap-5 py-10">
-          <form class="flex flex-col gap-4">
-            <Input v-model="email" placeholder="E-mail" />
-            <Input v-model="password" placeholder="Password" type="password" />
+          <form
+            class="flex flex-col gap-4 px-5"
+            @submit.prevent="handleRegister"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input v-model="form.name" placeholder="Name" class="w-full" />
+              <Input
+                v-model="form.surname"
+                placeholder="Surname"
+                class="w-full"
+              />
+            </div>
+            <Input v-model="form.email" placeholder="E-mail" />
+            <Input
+              v-model="form.password"
+              placeholder="Password"
+              type="password"
+            />
 
             <button
               class="border rounded-xl px-6 py-3 c-yellow text-black hover:text-white font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
             >
-              Login
+              Register
             </button>
           </form>
           <NuxtLink
             class="text-xs text-gray-600 hover:text-[#FDFF45] hover:scale-110"
-            to="/register"
-            >Creat an account</NuxtLink
+            to="/login"
+            >Login</NuxtLink
           >
         </div>
         <Icon
@@ -47,9 +65,7 @@
 </template>
 
 <script setup>
-const email = ref();
-const password = ref();
-
+const router = useRouter();
 definePageMeta({ layout: false });
 const verticalDotContainer = ref(null);
 const verticalDotCount = ref(0);
@@ -69,4 +85,37 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
+
+//api ye istek atmak
+const form = reactive({
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+});
+
+const handleRegister = async () => {
+  try {
+    const response = await fetch("http://localhost:3001/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // Burada backend’den gelen hata mesajını konsola yaz
+      console.error("Backend Hatası:", data);
+      alert(data.message || "Kayıt başarısız.");
+      return;
+    }
+
+    alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");
+    router.push("/login");
+  } catch (err) {
+    console.error("Fetch Hatası:", err);
+    alert("Kayıt sırasında bir hata oluştu.");
+  }
+};
 </script>
