@@ -95,27 +95,18 @@ const form = reactive({
 });
 
 const handleRegister = async () => {
-  try {
-    const response = await fetch("http://localhost:3001/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+  const { data, success } = await csrFetch("/api/register", {
+    method: "POST",
+    body: form,
+  });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      // Burada backend’den gelen hata mesajını konsola yaz
-      console.error("Backend Hatası:", data);
-      alert(data.message || "Kayıt başarısız.");
-      return;
-    }
-
-    alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");
-    router.push("/login");
-  } catch (err) {
-    console.error("Fetch Hatası:", err);
-    alert("Kayıt sırasında bir hata oluştu.");
+  if (!success) {
+    console.error("Backend Hatası:", data);
+    alert(data?.message || "Kayıt başarısız.");
+    return;
   }
+
+  alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.");
+  router.push("/login");
 };
 </script>

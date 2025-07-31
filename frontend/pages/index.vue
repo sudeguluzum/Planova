@@ -134,7 +134,7 @@ function openModal(item) {
   activeModal.value = item;
 }
 
-const notes = ref([{ title: "Hoşgeldn", note: "İlk notunu ekle.." }]);
+const notes = ref([{ title: "Hoşgeldin", note: "İlk notunu ekle.." }]);
 function handleSave(newNote) {
   notes.value.push(newNote);
   activeModal.value.null;
