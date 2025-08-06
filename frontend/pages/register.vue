@@ -65,10 +65,11 @@
 </template>
 
 <script setup>
-const router = useRouter();
 definePageMeta({ layout: false });
+const router = useRouter();
 const verticalDotContainer = ref(null);
 const verticalDotCount = ref(0);
+
 const calculateVerticalDots = () => {
   const height = verticalDotContainer.value?.clientHeight || 0;
   const spacing = 40;

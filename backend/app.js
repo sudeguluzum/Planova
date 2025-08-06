@@ -5,9 +5,10 @@ const authRoutes = require('./routers/auth');
 
 const app = express();
 
-// CORS ayarını frontend'in çalıştığı portu belirterek yap
+// CORS ayarı
 app.use(cors({
-    origin: 'http://localhost:3000'  // Frontend burada çalışıyorsa
+    origin: 'http://localhost:3000',
+    credentials: true
 }));
 
 app.use(express.json());

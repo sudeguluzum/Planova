@@ -7,6 +7,7 @@ export default async function csrFetch(url, options = {}) {
             "Content-Type": "application/json",
             ...(options.headers || {}),
         },
+        credentials: 'include',
     };
 
     if (fetchOptions.method !== "GET" && fetchOptions.method !== "HEAD" && options.body) {

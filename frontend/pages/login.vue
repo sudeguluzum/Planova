@@ -21,9 +21,13 @@
           </h1>
         </div>
         <div class="bg-circles flex-center flex-col gap-5 py-10">
-          <form class="flex flex-col gap-4">
-            <Input v-model="email" placeholder="E-mail" />
-            <Input v-model="password" placeholder="Password" type="password" />
+          <form @submit.prevent="handleLogin" class="flex flex-col gap-4">
+            <Input v-model="form.email" placeholder="E-mail" />
+            <Input
+              v-model="form.password"
+              placeholder="Password"
+              type="password"
+            />
 
             <button
               class="border rounded-xl px-6 py-3 c-yellow text-black hover:text-white font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
@@ -47,12 +51,13 @@
 </template>
 
 <script setup>
-const email = ref();
-const password = ref();
-
 definePageMeta({ layout: false });
+const auth = useAuth();
+const router = useRouter();
+
 const verticalDotContainer = ref(null);
 const verticalDotCount = ref(0);
+
 const calculateVerticalDots = () => {
   const height = verticalDotContainer.value?.clientHeight || 0;
   const spacing = 40;
@@ -69,4 +74,27 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("resize", handleResize);
 });
+
+//apiye istek atma
+
+const form = reactive({
+  email: "",
+  password: "",
+});
+const handleLogin = async () => {
+  const { data, success } = await csrFetch("/api/login", {
+    method: "POST",
+    body: form,
+    credentials: "include", // token cookiede
+  });
+
+  if (!success) {
+    alert(data?.message || "Giriş Başarısız.");
+    return;
+  }
+
+  alert("Giriş başarılı! Anasayfaya yönlendiriliyorsunuz..");
+  auth.login(data.user);
+  router.push("/");
+};
 </script>

@@ -57,3 +57,10 @@ button{
 .c-yellow {
     @apply bg-[#FDFF45] ;
 }
+
+.my-toast {
+  @apply p-4 rounded-lg shadow-lg;
+}
+.my-toast.success {
+  @apply bg-blue-500 text-white text-2xl;
+}

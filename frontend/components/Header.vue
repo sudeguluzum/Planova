@@ -14,16 +14,39 @@
         {{ i.name }}
       </button>
     </div>
-    <NuxtLink to="login"
+    <NuxtLink v-if="!auth.isAuthenticated" to="login"
       ><button
         class="border rounded-xl px-6 py-3 c-yellow text-black hover:text-white font-semibold hover:bg-gradient-to-r from-[#918EFF] via-[#FF629C] to-[#FDFF45] hover:scale-102"
       >
         Login
       </button></NuxtLink
     >
+    <div class="relative group">
+      <div
+        v-if="auth.isAuthenticated"
+        @click="toggleDropdown"
+        class="relative text-2xl cursor-pointer hover:scale-110"
+      >
+        <Icon name="line-md:account" class="c-gradient" />
+      </div>
+
+      <!-- logout dropdown  -->
+      <div
+        class="hidden absolute group-hover:block text-nowrap left-1/2 -translate-x-1/2 rounded bg-white/60 backdrop-blur-md shadow-md z-50"
+      >
+        <button
+          @click="logout"
+          class="w-full px-2 py-2 text-sm hover:scale-105 flex items-center gap-2"
+        >
+          <Icon name="line-md:log-out" class="text-lg bg-grey-500" />
+          Log Out
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
+const auth = useAuth();
 const menu = [
   { name: "Stick Notes" },
   { name: "To-do List" },
