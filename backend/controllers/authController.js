@@ -67,3 +67,17 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: "Internal server error" })
     }
 }
+
+exports.logout = (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+    });
+    res.json({ message: "Çıkış işlemi başarılı" });
+};
+
+
+exports.getUser = (req, res) => {
+    res.json(req.user);
+};
