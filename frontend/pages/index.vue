@@ -63,8 +63,10 @@
           <Note
             v-for="(i, j) in notes"
             :key="j"
+            :note_id="i.note_id"
             :title="i.title"
-            :note="i.note"
+            :content="i.content"
+            @delete="handleDelete"
           />
         </div>
       </div>
@@ -123,22 +125,56 @@
       <Icon name="streamline-freehand:link-paperclip" /> -->
 </template>
 <script setup>
-const { data: quote } = await useFetch("/api/quote");
-const addButtons = [
-  { icon: "fluent:note-add-24-regular", name: "Add Note", color: "c-purple" },
-  { icon: "lucide:list-todo", name: "Add ToDo", color: "c-pink" },
-  { icon: "octicon:goal-16", name: "Add Goal", color: "c-yellow" },
-];
+const notes = ref([]);
 const activeModal = ref(null);
+const auth = useAuth();
+
 function openModal(item) {
   activeModal.value = item;
 }
 
-const notes = ref([{ title: "Hoşgeldin", note: "İlk notunu ekle.." }]);
-function handleSave(newNote) {
-  notes.value.push(newNote);
-  activeModal.value.null;
+async function handleSave(newNote) {
+  const { success, data } = await addNote(newNote);
+  if (!success) {
+    alert(data?.message || "Not eklenemedi!");
+    return;
+  }
+  notes.value.push(data.note);
+  activeModal.value = null;
 }
+
+async function handleDelete(id) {
+  const { success, data } = await deleteNote(id);
+  if (!success) {
+    alert(data?.message || "Not silinemedi");
+    return;
+  }
+  notes.value = notes.value.filter((note) => note.note_id !== id);
+}
+
+onMounted(async () => {
+  if (auth.isAuthenticated) {
+    const { success, data } = await getNotes();
+    if (success) {
+      notes.value = data.notes;
+    } else {
+      notes.value = [
+        {
+          title: "Hoşgeldin!",
+          content: "Giriş yaparak not eklemeye başlayabilirsin..",
+        },
+      ];
+    }
+  }
+});
+
+const { data: quote } = await useFetch("/api/quote");
+const addButtons = [
+  { icon: "fluent:note-add-24-regular", name: "Add Note", color: "c-purple" },
+  { icon: "lucide:list-todo", name: "Add ToDo", color: "c-pink" },
+  // { icon: "octicon:goal-16", name: "Add Goal", color: "c-yellow" },
+];
+
 const horizontalDotContainer = ref(null);
 const verticalDotContainer = ref(null);
 

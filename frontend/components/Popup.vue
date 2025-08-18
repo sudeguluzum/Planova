@@ -19,7 +19,7 @@
         type="text"
       />
       <textarea
-        v-model="note"
+        v-model="content"
         placeholder="Write note..."
         rows="4"
         class="w-full border-md p-2 mb-4"
@@ -42,16 +42,16 @@ defineProps(["item"]);
 const emit = defineEmits(["close", "save"]);
 
 const title = ref("");
-const note = ref("");
+const content = ref("");
 
 function save() {
-  if (!title.value || !note.value) return;
+  if (!title.value || !content.value) return;
 
   emit("save", {
     title: title.value,
-    note: note.value,
+    content: content.value,
   });
   title.value = "";
-  note.value = "";
+  content.value = "";
 }
 </script>
