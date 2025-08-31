@@ -88,10 +88,9 @@
           </div>
 
           <div class="p-6">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem hic quisquam unde, non consequuntur corrupti, a
-            molestiae possimus voluptates asperiores doloremque debitis ab
-            praesentium itaque deleniti cumque, recusandae minima quia.
+            <div class="flex-center">
+              <h1 class="c-yellow px-3 -rotate-2 w-fit font-semibold">To-Do</h1>
+            </div>
           </div>
         </div>
 
@@ -119,10 +118,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <Icon name="iconoir:star-dashed" />
-      <Icon name="iconoir:bright-star" />
-      <Icon name="streamline-freehand:link-paperclip" /> -->
 </template>
 <script setup>
 const notes = ref([]);
@@ -171,7 +166,7 @@ onMounted(async () => {
 const { data: quote } = await useFetch("/api/quote");
 const addButtons = [
   { icon: "fluent:note-add-24-regular", name: "Add Note", color: "c-purple" },
-  { icon: "lucide:list-todo", name: "Add ToDo", color: "c-pink" },
+  { icon: "lucide:list-todo", name: "Add To-Do", color: "c-pink" },
   // { icon: "octicon:goal-16", name: "Add Goal", color: "c-yellow" },
 ];
 

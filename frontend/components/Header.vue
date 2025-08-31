@@ -2,7 +2,7 @@
   <div
     class="c-black rounded-t-4xl px-10 mt-10 flex items-center justify-between w-full max-w-screen-xl py-4 md:mx-auto text-white"
   >
-    <span class="flex-center gap-2 text-2xl font-bold">
+    <span class="flex-center gap-5 text-2xl font-bold">
       <NuxtImg src="favicon.ico" class="w-12" />
       <h1>Planova</h1></span
     >
